@@ -48,6 +48,6 @@
 // ============================================================================
 // Uncomment to swap or flip axes
 
-#define TRACKPAD_SWITCH_XY          // Swap X and Y axes
+define TRACKPAD_SWITCH_XY          // Swap X and Y axes
 // #define TRACKPAD_FLIP_X          // Invert X axis (left/right)
 // #define TRACKPAD_FLIP_Y          // Invert Y axis (up/down)
