@@ -19,3 +19,22 @@
 &left_encoder {
     status = "okay";
 };
+
+&trackpad {
+    status = "okay";
+};
+
+&trackpad_input {
+    status = "okay";
+};
+
+&trackpad_peripheral_split {
+    device = <&trackpad>;
+};
+
+/ {
+    trackpad_split_listener: trackpad_split_listener {
+        compatible = "zmk,input-listener";
+        device = <&trackpad_peripheral_split>;
+    };
+};
