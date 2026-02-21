@@ -112,15 +112,6 @@ RC(3,0) RC(3,1) RC(3,2) RC(3,3)                                         RC(3,7) 
 };
 
 / {
-    tpad0: tpad0 {
-        	compatible = "zmk,input-listener";
-        	status = "okay";
-        	device = <&trackpad>;
-        	input-processors = <
-            	&pointer_accel      // Acceleration processor
-            	&zip_xy_transform
-        	>;
-    };
 
     trackpad_input: trackpad_input {
         compatible = "zmk,input-listener";
@@ -138,4 +129,14 @@ RC(3,0) RC(3,1) RC(3,2) RC(3,3)                                         RC(3,7) 
         };
     };
 };
-
+/ {
+    tpad0: tpad0 {
+        compatible = "zmk,input-listener";
+        status = "okay";
+        device = <&glidepoint>;
+        input-processors = <
+            &pointer_accel      // Acceleration processor
+            &zip_xy_transform
+        >;
+    };
+};
