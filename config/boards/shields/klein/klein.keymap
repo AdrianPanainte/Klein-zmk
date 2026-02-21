@@ -43,17 +43,17 @@
         mouse_scroll_up: ms_scroll_up {
             compatible = "zmk,behavior-mouse";
             #binding-cells = <2>;
-            type = "scroll";
+            type = "wheel";
             axis = "vert";
-            direction = 1;
+            amount = <1>;
         };
 
         mouse_scroll_down: ms_scroll_down {
             compatible = "zmk,behavior-mouse";
             #binding-cells = <2>;
-            type = "scroll";
+            type = "wheel";
             axis = "vert";
-            direction = -1;
+            amount = <-1>;
         };
         enc_app_switch_mac: enc_app_switch_mac {
             compatible = "zmk,behavior-encoder";
