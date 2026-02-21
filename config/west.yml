@@ -6,8 +6,8 @@ manifest:
       url-base: https://github.com/infused-kim
     - name: aym1607
       url-base: https://github.com/AYM1607
-    - name: oleksandrmaslov
-      url-base: https://github.com/oleksandrmaslov   
+    - name: nuovotaka
+      url-base: https://github.com/nuovotaka
   projects:
     - name: zmk
       remote: zmkfirmware
@@ -16,8 +16,8 @@ manifest:
     - name: zmk-driver-azoteq-iqs5xx
       remote: aym1607
       revision: main
-    - name: zmk-pointing-acceleration
-      remote: oleksandrmaslov
+    - name: zmk-pointing-acceleration-alpha
+      remote: nuovotaka
       revision: main
   self:
     path: config
