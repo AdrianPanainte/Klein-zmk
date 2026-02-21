@@ -132,6 +132,12 @@ RC(3,0) RC(3,1) RC(3,2) RC(3,3)                                         RC(3,7) 
         };
     };
 };
+
+&pointer_accel {
+    input-type = <INPUT_EV_REL>;
+    codes = <INPUT_REL_X INPUT_REL_Y>;
+    // Preset values are automatically applied!
+};
 / {
     tpad0: tpad0 {
         compatible = "zmk,input-listener";
