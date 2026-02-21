@@ -1,0 +1,53 @@
+/*
+ * Trackpad User Configuration
+ *
+ * This file contains all user-configurable trackpad settings.
+ * Modify these values to customize trackpad behavior.
+ */
+
+// ============================================================================
+// GESTURE FEATURES
+// ============================================================================
+// Uncomment to enable each gesture feature
+
+#define TRACKPAD_ONE_FINGER_TAP     // Single tap = left click
+#define TRACKPAD_TWO_FINGER_TAP     // Two finger tap = right click
+#define TRACKPAD_PRESS_AND_HOLD     // Press and hold = drag
+#define TRACKPAD_SCROLL             // Two finger scroll
+
+// ============================================================================
+// TIMING SETTINGS
+// ============================================================================
+
+// Press-and-hold activation time in milliseconds (default: 250)
+// How long to press before drag mode activates
+#define TRACKPAD_PRESS_HOLD_TIME 250
+
+// ============================================================================
+// SENSITIVITY SETTINGS
+// ============================================================================
+
+// Bottom beta: Palm rejection sensitivity (default: 5, range: 0-255)
+// Higher = more aggressive palm rejection
+#define TRACKPAD_BOTTOM_BETA 5
+
+// Stationary threshold: Movement threshold (default: 5, range: 0-255)
+// Higher = less sensitive to small movements
+#define TRACKPAD_STATIONARY_THRESHOLD 0
+
+// ============================================================================
+// SCROLL BEHAVIOR
+// ============================================================================
+// Uncomment to reverse scroll direction
+
+#define TRACKPAD_NATURAL_SCROLL_Y   // Natural vertical scroll (like trackpad)
+#define TRACKPAD_NATURAL_SCROLL_X   // Natural horizontal scroll
+
+// ============================================================================
+// ORIENTATION
+// ============================================================================
+// Uncomment to swap or flip axes
+
+#define TRACKPAD_SWITCH_XY          // Swap X and Y axes
+// #define TRACKPAD_FLIP_X          // Invert X axis (left/right)
+// #define TRACKPAD_FLIP_Y          // Invert Y axis (up/down)

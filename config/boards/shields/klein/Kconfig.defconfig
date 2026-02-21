@@ -13,4 +13,25 @@ if SHIELD_KLEIN_LEFT || SHIELD_KLEIN_RIGHT
 config ZMK_SPLIT
     default y
 
+config ZMK_SLEEP
+    default y
+
+config ZMK_POINTING
+    default y
+
+config SPI
+    default y
+
+config I2C
+    default y
+
+config INPUT
+    default y
+
+config ZMK_MOUSE
+    default y
+
+config INPUT_AZOTEQ_IQS5XX
+    default y
+    
 endif
