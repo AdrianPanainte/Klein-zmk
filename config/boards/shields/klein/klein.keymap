@@ -40,21 +40,6 @@
             tap-ms = <5>;
         };
         
-        mouse_scroll_up: ms_scroll_up {
-            compatible = "zmk,behavior-mouse";
-            #binding-cells = <2>;
-            type = "wheel";
-            axis = "vert";
-            amount = <1>;
-        };
-
-        mouse_scroll_down: ms_scroll_down {
-            compatible = "zmk,behavior-mouse";
-            #binding-cells = <2>;
-            type = "wheel";
-            axis = "vert";
-            amount = <-1>;
-        };
         enc_app_switch_mac: enc_app_switch_mac {
             compatible = "zmk,behavior-encoder";
             bindings = <&kp LC(TAB)>, <&kp LC(LS(TAB))>; // Cmd+Tab / Cmd+Shift+Tab
@@ -87,9 +72,7 @@
 &kp Z          &kp X          &kp C          &kp V          &kp B               &kp N          &kp M          &kp COMMA      &kp DOT        &kp FSLH
 &lt MEDIA ESC  &lt NAV SPACE  &lt BLU TAB    &kp K_MUTE                                                       &lt SYM RET    &lt NUM BKSP   &lt FUN DEL
             >;
-            &left_encoder {
-                bindings = <&ms_scroll_up &ms_scroll_down>;
-            };
+            sensor-bindings = <&inc_dec_kp mouse_scroll mouse_scroll>;
         };
 
         nav_layer {
