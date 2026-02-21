@@ -39,6 +39,21 @@
 
             tap-ms = <5>;
         };
+        
+        enc_app_switch_mac: enc_app_switch_mac {
+            compatible = "zmk,behavior-encoder";
+            bindings = <&kp LC(TAB)>, <&kp LC(LS(TAB))>; // Cmd+Tab / Cmd+Shift+Tab
+        };
+
+        enc_window_cycle_mac: enc_window_cycle_mac {
+            compatible = "zmk,behavior-encoder";
+            bindings = <&kp LC(GRAVE)>, <&kp LC(LS(GRAVE))>; // Cmd+` / Cmd+Shift+`
+        };
+
+        enc_ctrl_tab: enc_ctrl_tab {
+            compatible = "zmk,behavior-encoder";
+            bindings = <&kp LCTRL(TAB)>, <&kp LCTRL(LS(TAB))>; // Ctrl+Tab / Ctrl+Shift+Tab
+        };
     };
 
     keymap {
@@ -57,7 +72,7 @@
 &kp Z          &kp X          &kp C          &kp V          &kp B               &kp N          &kp M          &kp COMMA      &kp DOT        &kp FSLH
 &lt MEDIA ESC  &lt NAV SPACE  &lt BLU TAB    &kp K_MUTE                                                       &lt SYM RET    &lt NUM BKSP   &lt FUN DEL
             >;
-        sensor-bindings = <&inc_dec_kp SCRL_UP SCRL_DOWN>;
+        sensor-bindings = <&inc_dec_kp MS_WH_UP MS_WH_DOWN>;
         };
 
         nav_layer {
@@ -79,7 +94,9 @@
 &kp GRAVE      &kp N1         &kp N2         &kp N3         &kp BSLH            &trans         &trans         &trans         &trans         &trans
 &kp PERIOD     &kp N0         &kp MINUS      &bootloader                                                      &trans         &trans         &trans
             >;
-        sensor-bindings = <&inc_dec_kp PG_UP PG_DN>;
+            &left_encoder {
+                bindings = <&enc_app_switch_mac>;
+            };
         };
 
         fun_layer {
@@ -90,7 +107,9 @@
 &kp F10        &kp F1         &kp F2         &kp F3         &kp PAUSE_BREAK     &trans         &trans         &trans         &trans         &trans
 &kp ESC        &kp SPACE      &kp TAB        &bootloader                                                      &trans         &trans         &trans
             >;
-        sensor-bindings = <&inc_dec_kp PG_UP PG_DN>;
+            &left_encoder {
+                bindings = <&enc_window_cycle_mac>;
+            };
         };
 
         sym_layer {
@@ -101,7 +120,9 @@
 &kp LS(GRAVE)  &kp LS(N1)     &kp LS(N2)     &kp LS(N3)     &kp LS(BSLH)        &trans         &trans         &trans         &trans         &trans
 &kp LS(PERIOD) &kp LS(N0)     &kp LS(MINUS)  &bootloader                                                      &trans         &trans         &trans
             >;
-        sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP>;
+            &left_encoder {
+                bindings = <&enc_ctrl_tab>;
+            };
         };
 
         media_layer {
