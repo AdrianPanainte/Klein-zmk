@@ -7,8 +7,6 @@
 #include <dt-bindings/zmk/matrix_transform.h>
 #include "trackpad_config.dtsi"
 
-#include <input/processors.dtsi>
-#include <behaviors/input_gestures_accel.dtsi>
 
 / {
 	chosen {

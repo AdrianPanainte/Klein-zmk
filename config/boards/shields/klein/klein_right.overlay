@@ -6,7 +6,6 @@
 
 #include "klein.dtsi"
 #include <input/processors.dtsi>
-#include <behaviors/input_gestures_accel.dtsi>
 
 &pinctrl {
     i2c1_default: i2c1_default {
