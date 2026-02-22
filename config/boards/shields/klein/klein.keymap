@@ -42,16 +42,19 @@
         
         enc_app_switch_mac: enc_app_switch_mac {
             compatible = "zmk,behavior-encoder";
+            #sensor-binding-cells = <2>;
             bindings = <&kp LC(TAB)>, <&kp LC(LS(TAB))>; // Cmd+Tab / Cmd+Shift+Tab
         };
 
         enc_window_cycle_mac: enc_window_cycle_mac {
             compatible = "zmk,behavior-encoder";
+            #sensor-binding-cells = <2>;
             bindings = <&kp LC(GRAVE)>, <&kp LC(LS(GRAVE))>; // Cmd+` / Cmd+Shift+`
         };
 
         enc_ctrl_tab: enc_ctrl_tab {
             compatible = "zmk,behavior-encoder";
+            #sensor-binding-cells = <2>;
             bindings = <&kp LCTRL(TAB)>, <&kp LCTRL(LS(TAB))>; // Ctrl+Tab / Ctrl+Shift+Tab
         };
     };
