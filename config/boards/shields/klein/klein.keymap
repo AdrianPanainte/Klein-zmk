@@ -97,7 +97,7 @@
 &kp GRAVE      &kp N1         &kp N2         &kp N3         &kp BSLH            &trans         &trans         &trans         &trans         &trans
 &kp PERIOD     &kp N0         &kp MINUS      &bootloader                                                      &trans         &trans         &trans
             >;
-            sensor-bindings = <&enc_app_switch_mac>;
+            //sensor-bindings = <&enc_app_switch_mac>;
         };
 
         fun_layer {
@@ -108,7 +108,7 @@
 &kp F10        &kp F1         &kp F2         &kp F3         &kp PAUSE_BREAK     &trans         &trans         &trans         &trans         &trans
 &kp ESC        &kp SPACE      &kp TAB        &bootloader                                                      &trans         &trans         &trans
             >;
-            sensor-bindings = <&enc_window_cycle_mac>;
+            //sensor-bindings = <&enc_window_cycle_mac>;
         };
 
         sym_layer {
@@ -119,7 +119,7 @@
 &kp LS(GRAVE)  &kp LS(N1)     &kp LS(N2)     &kp LS(N3)     &kp LS(BSLH)        &trans         &trans         &trans         &trans         &trans
 &kp LS(PERIOD) &kp LS(N0)     &kp LS(MINUS)  &bootloader                                                      &trans         &trans         &trans
             >;
-            sensor-bindings = <&enc_ctrl_tab>;
+            //sensor-bindings = <&enc_ctrl_tab>;
         };
 
         media_layer {
