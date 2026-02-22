@@ -72,7 +72,7 @@
 &kp Z          &kp X          &kp C          &kp V          &kp B               &kp N          &kp M          &kp COMMA      &kp DOT        &kp FSLH
 &lt MEDIA ESC  &lt NAV SPACE  &lt BLU TAB    &kp K_MUTE                                                       &lt SYM RET    &lt NUM BKSP   &lt FUN DEL
             >;
-            sensor-bindings = <&mouse_scroll>;
+            // sensor-bindings = <&mouse_scroll>;
         };
 
         nav_layer {
@@ -94,7 +94,7 @@
 &kp GRAVE      &kp N1         &kp N2         &kp N3         &kp BSLH            &trans         &trans         &trans         &trans         &trans
 &kp PERIOD     &kp N0         &kp MINUS      &bootloader                                                      &trans         &trans         &trans
             >;
-            sensor-bindings =  <&enc_app_switch_mac>;
+            sensor-bindings = <&enc_app_switch_mac>;
         };
 
         fun_layer {
@@ -105,7 +105,7 @@
 &kp F10        &kp F1         &kp F2         &kp F3         &kp PAUSE_BREAK     &trans         &trans         &trans         &trans         &trans
 &kp ESC        &kp SPACE      &kp TAB        &bootloader                                                      &trans         &trans         &trans
             >;
-            sensor-bindings =   <&enc_window_cycle_mac>;
+            sensor-bindings = <&enc_window_cycle_mac>;
         };
 
         sym_layer {
