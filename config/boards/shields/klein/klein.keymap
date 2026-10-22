@@ -28,8 +28,8 @@
 // (same order as the volume bindings below). Swap pairs if a direction feels backwards.
 
 // Wheel speed per detent. &msc emits speed * 16ms / 1000 per 16ms tick and the
-// knob holds it for one tick (tap-ms below), so 100 => 1 wheel notch per detent.
-#define ENC_SCROLL_SPEED 100
+// knob holds it for one tick (tap-ms below), so 150 => 2 wheel notches per detent.
+#define ENC_SCROLL_SPEED 150
 
 &mt {
   quick-tap-ms = <100>;

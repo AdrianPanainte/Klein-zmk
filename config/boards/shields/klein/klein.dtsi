@@ -51,7 +51,7 @@ RC(3,0) RC(3,1) RC(3,2) RC(3,3)                                         RC(3,7) 
         label = "LEFT_ENCODER";
         a-gpios = <&xiao_d 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
         b-gpios = <&xiao_d 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-        resolution = <2>;
+        resolution = <4>;  // 4 pulses per detent => one trigger per click
 		status = "disabled";
 	};
 
