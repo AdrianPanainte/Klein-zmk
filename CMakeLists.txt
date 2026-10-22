@@ -1,0 +1,1 @@
+target_sources_ifdef(CONFIG_KLEIN_ENCODER_SLEEP_DISCONNECT app PRIVATE src/encoder_sleep.c)

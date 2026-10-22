@@ -1,0 +1,4 @@
+name: klein-zmk
+build:
+  cmake: .
+  kconfig: Kconfig

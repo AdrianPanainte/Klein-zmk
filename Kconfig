@@ -1,0 +1,9 @@
+config KLEIN_ENCODER_SLEEP_DISCONNECT
+    bool "Disconnect the left encoder pins before deep sleep"
+    default y
+    depends on ZMK_SLEEP
+    help
+      The EC11 driver keeps its internal pull-ups on forever, so if the encoder
+      rests with a contact closed it leaks current, even in deep sleep. This
+      disconnects the A/B pins right before the keyboard powers off. Waking up
+      resets the MCU, which reinitializes the encoder normally.
