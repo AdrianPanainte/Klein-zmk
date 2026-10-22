@@ -22,6 +22,14 @@
 #define SYM  4
 #define MEDIA  5
 #define BLU 6
+#define APPSW 7  // auto-enabled while the knob drives the Cmd+Tab switcher
+
+// Knob bindings: first binding = counter-clockwise, second = clockwise
+// (same order as the volume bindings below). Swap pairs if a direction feels backwards.
+
+// Wheel speed per detent. &msc emits speed * 16ms / 1000 per 16ms tick and the
+// knob holds it for one tick (tap-ms below), so 100 => 1 wheel notch per detent.
+#define ENC_SCROLL_SPEED 100
 
 &mt {
   quick-tap-ms = <100>;
@@ -32,30 +40,81 @@
 
 / {
     behaviors {
-        mouse_scroll: sensor_scroll {
-            compatible = "zmk,behavior-sensor-rotate-var";
-            #sensor-binding-cells = <2>;
-            bindings = <&msc>, <&msc>;
-
-            tap-ms = <5>;
-        };
-        
-        enc_app_switch_mac: enc_app_switch_mac {
-            compatible = "zmk,behavior-encoder";
-            #sensor-binding-cells = <2>;
-            bindings = <&kp LC(TAB)>, <&kp LC(LS(TAB))>; // Cmd+Tab / Cmd+Shift+Tab
+        // Base layer: knob = mouse wheel
+        scrl_enc: scrl_enc {
+            compatible = "zmk,behavior-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            bindings = <&msc MOVE_Y(ENC_SCROLL_SPEED)>, <&msc MOVE_Y(-ENC_SCROLL_SPEED)>;
+            tap-ms = <24>;
         };
 
-        enc_window_cycle_mac: enc_window_cycle_mac {
-            compatible = "zmk,behavior-encoder";
-            #sensor-binding-cells = <2>;
-            bindings = <&kp LC(GRAVE)>, <&kp LC(LS(GRAVE))>; // Cmd+` / Cmd+Shift+`
+        // NUM layer (hold BKSP): knob = Cmd+Tab app switcher.
+        // First detent turns on APPSW and presses Right Cmd, held until BKSP is released.
+        // Right Cmd is used so it never clashes with the home-row Cmd (LGUI on A and ').
+        appsw_enc: appsw_enc {
+            compatible = "zmk,behavior-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            bindings = <&appsw_p>, <&appsw_n>;
         };
 
-        enc_ctrl_tab: enc_ctrl_tab {
-            compatible = "zmk,behavior-encoder";
-            #sensor-binding-cells = <2>;
-            bindings = <&kp LCTRL(TAB)>, <&kp LCTRL(LS(TAB))>; // Ctrl+Tab / Ctrl+Shift+Tab
+        appsw_n: appsw_n {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            bindings
+                = <&macro_tap &tog_on APPSW>
+                , <&macro_press &kp RGUI>
+                , <&macro_tap &kp TAB>
+                ;
+        };
+
+        appsw_p: appsw_p {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            bindings
+                = <&macro_tap &tog_on APPSW>
+                , <&macro_press &kp RGUI>
+                , <&macro_tap &kp LS(TAB)>
+                ;
+        };
+
+        // Momentary layer that, on release, also lets go of the switcher's Cmd and APPSW.
+        // RGUI is released twice in case a very fast flick pressed it twice; extra releases are no-ops.
+        mo_appsw: mo_appsw {
+            compatible = "zmk,behavior-macro-one-param";
+            #binding-cells = <1>;
+            wait-ms = <0>;
+            bindings
+                = <&macro_param_1to1>
+                , <&macro_press &mo MACRO_PLACEHOLDER>
+                , <&macro_pause_for_release>
+                , <&macro_release &kp RGUI &kp RGUI>
+                , <&macro_tap &tog_off APPSW>
+                , <&macro_param_1to1>
+                , <&macro_release &mo MACRO_PLACEHOLDER>
+                ;
+        };
+
+        // Same as &lt, but the hold side is &mo_appsw
+        lt_appsw: lt_appsw {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <200>;
+            bindings = <&mo_appsw>, <&kp>;
+        };
+
+        tog_on: tog_on {
+            compatible = "zmk,behavior-toggle-layer";
+            #binding-cells = <1>;
+            toggle-mode = "on";
+        };
+
+        tog_off: tog_off {
+            compatible = "zmk,behavior-toggle-layer";
+            #binding-cells = <1>;
+            toggle-mode = "off";
         };
     };
 
@@ -73,9 +132,9 @@
 &kp Q          &kp W          &kp E          &kp R          &kp T               &kp Y          &kp U          &kp I          &kp O          &kp P
 &mt LGUI A     &mt LALT S     &mt LCTRL D    &mt LSHFT F    &kp G               &kp H          &mt RSHFT J    &mt RCTRL K    &mt RALT L     &mt LGUI SQT
 &kp Z          &kp X          &kp C          &kp V          &kp B               &kp N          &kp M          &kp COMMA      &kp DOT        &kp FSLH
-&lt MEDIA ESC  &lt NAV SPACE  &lt BLU TAB    &kp K_MUTE                                                       &lt SYM RET    &lt NUM BKSP   &lt FUN DEL
+&lt MEDIA ESC  &lt NAV SPACE  &lt BLU TAB    &kp K_MUTE                                                       &lt SYM RET    &lt_appsw NUM BKSP &lt FUN DEL
             >;
-            // sensor-bindings = <&mouse_scroll>;
+            sensor-bindings = <&scrl_enc>;
         };
 
         nav_layer {
@@ -97,7 +156,7 @@
 &kp GRAVE      &kp N1         &kp N2         &kp N3         &kp BSLH            &trans         &trans         &trans         &trans         &trans
 &kp PERIOD     &kp N0         &kp MINUS      &bootloader                                                      &trans         &trans         &trans
             >;
-            //sensor-bindings = <&enc_app_switch_mac>;
+            sensor-bindings = <&appsw_enc>;  // hold BKSP + knob: switch apps (Cmd+Tab)
         };
 
         fun_layer {
@@ -108,7 +167,7 @@
 &kp F10        &kp F1         &kp F2         &kp F3         &kp PAUSE_BREAK     &trans         &trans         &trans         &trans         &trans
 &kp ESC        &kp SPACE      &kp TAB        &bootloader                                                      &trans         &trans         &trans
             >;
-            //sensor-bindings = <&enc_window_cycle_mac>;
+            sensor-bindings = <&inc_dec_kp LG(LS(GRAVE)) LG(GRAVE)>;  // hold DEL + knob: windows of the same app (Cmd+`)
         };
 
         sym_layer {
@@ -119,7 +178,7 @@
 &kp LS(GRAVE)  &kp LS(N1)     &kp LS(N2)     &kp LS(N3)     &kp LS(BSLH)        &trans         &trans         &trans         &trans         &trans
 &kp LS(PERIOD) &kp LS(N0)     &kp LS(MINUS)  &bootloader                                                      &trans         &trans         &trans
             >;
-            //sensor-bindings = <&enc_ctrl_tab>;
+            sensor-bindings = <&inc_dec_kp LC(LS(TAB)) LC(TAB)>;  // hold RET + knob: browser/editor tabs (Ctrl+Tab)
         };
 
         media_layer {
@@ -141,6 +200,17 @@
 &trans         &trans         &trans         &trans                                                           &trans         &trans         &trans
             >;
         sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP>;
+        };
+
+        // Turned on by the first knob detent on NUM; Right Cmd is already held, so just Tab
+        appsw_layer {
+            bindings = <
+&trans         &trans         &trans         &trans         &trans              &trans         &trans         &trans         &trans         &trans
+&trans         &trans         &trans         &trans         &trans              &trans         &trans         &trans         &trans         &trans
+&trans         &trans         &trans         &trans         &trans              &trans         &trans         &trans         &trans         &trans
+&trans         &trans         &trans         &trans                                                           &trans         &trans         &trans
+            >;
+        sensor-bindings = <&inc_dec_kp LS(TAB) TAB>;
         };
     };
 };
