@@ -7,3 +7,12 @@ config KLEIN_ENCODER_SLEEP_DISCONNECT
       rests with a contact closed it leaks current, even in deep sleep. This
       disconnects the A/B pins right before the keyboard powers off. Waking up
       resets the MCU, which reinitializes the encoder normally.
+
+config KLEIN_BATTERY_REPORT_LOWEST
+    bool "Report the lower of both halves' battery levels to the host"
+    default y
+    depends on ZMK_SPLIT_ROLE_CENTRAL && ZMK_BATTERY_REPORTING && ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING && !BT_BAS
+    help
+      Replaces Zephyr's Battery Service on the central (requires CONFIG_BT_BAS=n)
+      with an identical one that reports min(central, peripheral). Hosts like
+      macOS only show one battery level per keyboard.
