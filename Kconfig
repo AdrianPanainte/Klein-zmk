@@ -11,8 +11,11 @@ config KLEIN_ENCODER_SLEEP_DISCONNECT
 config KLEIN_BATTERY_REPORT_LOWEST
     bool "Report the lower of both halves' battery levels to the host"
     default y
-    depends on ZMK_SPLIT_ROLE_CENTRAL && ZMK_BATTERY_REPORTING && ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING && !BT_BAS
+    depends on ZMK_SPLIT_ROLE_CENTRAL && ZMK_BATTERY_REPORTING && BT_GATT_CLIENT && !BT_BAS
     help
       Replaces Zephyr's Battery Service on the central (requires CONFIG_BT_BAS=n)
       with an identical one that reports min(central, peripheral). Hosts like
-      macOS only show one battery level per keyboard.
+      macOS only show one battery level per keyboard. The peripheral's level is
+      read directly once a minute; leave
+      CONFIG_ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING off (it can break the
+      encoder's split subscription).
