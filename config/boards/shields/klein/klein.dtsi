@@ -51,13 +51,16 @@ RC(3,0) RC(3,1) RC(3,2) RC(3,3)                                         RC(3,7) 
         label = "LEFT_ENCODER";
         a-gpios = <&xiao_d 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
         b-gpios = <&xiao_d 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-        resolution = <4>;  // 4 pulses per detent => one trigger per click
+        // Legacy `resolution` is broken in ZMK v0.3 (fires on every pulse), so use steps.
+        // This encoder gives 2 pulses per click: steps / triggers-per-rotation = 2.
+        steps = <60>;
 		status = "disabled";
 	};
 
 	sensors {
 		compatible = "zmk,keymap-sensors";
 		sensors = <&left_encoder>;
+		triggers-per-rotation = <30>;  // one trigger per click (see steps above)
 	};
 	trackpad_listener: trackpad_listener {
         compatible = "zmk,input-listener";
