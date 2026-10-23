@@ -18,6 +18,7 @@
 #include <zephyr/bluetooth/conn.h>
 #include <zephyr/bluetooth/gatt.h>
 #include <zephyr/bluetooth/uuid.h>
+#include <zephyr/init.h>
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
 
@@ -95,6 +96,8 @@ ZMK_SUBSCRIPTION(klein_battery_lowest, zmk_battery_state_changed);
 
 /* Peripheral level: read its Battery Level characteristic over the split link */
 
+// Static: the read keeps pointing at the UUID until it completes
+static const struct bt_uuid_16 batt_lvl_uuid = BT_UUID_INIT_16(BT_UUID_BAS_BATTERY_LEVEL_VAL);
 static struct bt_gatt_read_params read_params;
 static atomic_t read_in_flight;
 static uint8_t read_result;
@@ -150,7 +153,7 @@ static void poll_peripheral(struct k_work *work) {
         .handle_count = 0,
         .by_uuid = {.start_handle = 0x0001,
                     .end_handle = 0xffff,
-                    .uuid = BT_UUID_BAS_BATTERY_LEVEL},
+                    .uuid = &batt_lvl_uuid.uuid},
     };
     int err = bt_gatt_read(conn, &read_params);
     if (err < 0) {
